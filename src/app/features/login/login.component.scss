@@ -1,0 +1,15 @@
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+  padding: 2rem;
+  border: 1px solid var(--mat-sys-on-background);
+  border-radius: 1rem;
+
+  .actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+  }
+}

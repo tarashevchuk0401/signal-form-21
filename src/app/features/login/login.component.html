@@ -1,1 +1,26 @@
-<p>login works!</p>
+<form (submit)="submit($event)">
+  <div class="actions">
+    <button type="button" matButton="outlined" (click)="setEmail()">Set Email</button>
+
+    <button type="button" matButton="outlined" (click)="setEmailAndPassword()">
+      Set Email & Password
+    </button>
+  </div>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Email</mat-label>
+    <input [formField]="loginForm.email" matInput placeholder="Email" />
+  </mat-form-field>
+  @if (loginForm.email().touched() && loginForm.email().invalid()) {
+    @for (error of loginForm.email().errors(); track error) {
+      <mat-error>{{ error.message }}</mat-error>
+    }
+  }
+
+  <mat-form-field appearance="outline">
+    <mat-label>Password</mat-label>
+    <input [formField]="loginForm.password" matInput placeholder="Password" />
+  </mat-form-field>
+
+  <button type="submit" matButton="filled">Submit</button>
+</form>

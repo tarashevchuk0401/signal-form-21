@@ -17,9 +17,9 @@ import { MatButton } from '@angular/material/button';
     MatButton,
     RouterLink,
   ],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
+  templateUrl: './app.html',
+  styleUrl: './app.scss',
 })
-export class AppComponent {
+export class App {
   title = 'signal-form';
 }
