@@ -7,6 +7,7 @@
     </button>
 
     <button type="button" matButton="outlined" (click)="toggleAge()">Toggle Age</button>
+    <button type="button" matButton="outlined" (click)="addAddress()">Add address!</button>
   </div>
 
   <mat-form-field appearance="outline">
@@ -39,6 +40,13 @@
         <mat-error>{{ error.message }}</mat-error>
       }
     }
+  }
+
+  @for (address of loginForm.address; track $index) {
+    <mat-form-field appearance="outline">
+      <mat-label>Address {{ $index + 1 }}</mat-label>
+      <input [formField]="address" type="string" matInput placeholder="Address" />
+    </mat-form-field>
   }
 
   <button type="submit" matButton="filled" [disabled]="!loginForm().valid()">Submit</button>

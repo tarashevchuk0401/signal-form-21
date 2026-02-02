@@ -1,5 +1,6 @@
 import { Component, signal } from '@angular/core';
 import {
+  apply,
   debounce,
   disabled,
   email,
@@ -11,6 +12,7 @@ import {
 import { MatError, MatFormField, MatInput, MatLabel } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
 import { JsonPipe } from '@angular/common';
+import { loginSchema } from 'src/app/shared/validation/login-schema';
 
 @Component({
   selector: 'app-login',
@@ -25,11 +27,13 @@ export class LoginComponent {
     email: '',
     password: '',
     age: '',
+    address: [],
   });
 
   loginForm = form(this.loginModel, (schemaPath) => {
     debounce(schemaPath.email, 1000);
-    required(schemaPath.email, { message: 'Email is required' });
+    apply(schemaPath, loginSchema);
+
     required(schemaPath.password, { message: 'Password is required' });
     minLength(schemaPath.password, 2, { message: 'Too short' });
     email(schemaPath.email, { message: 'Enter a valid email address' });
@@ -51,10 +55,15 @@ export class LoginComponent {
       email: 'test',
       password: '123456',
       age: '1',
+      address: [],
     });
   }
 
   toggleAge(): void {
     this.isAgeEditable.update((v) => !v);
+  }
+
+  addAddress(): void {
+    this.loginForm.address().value.update((v) => [...v, '']);
   }
 }
