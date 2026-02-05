@@ -1,0 +1,8 @@
+<input
+    class="my-custom-input"
+    type="text"
+    [value]="value()"
+    (input)="value.set($event.target.value)"
+    placeholder="Enter text..."
+/>
+<div>nt : {{touched()}}</div>

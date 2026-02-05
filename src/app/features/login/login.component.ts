@@ -11,12 +11,12 @@ import {
 } from '@angular/forms/signals';
 import { MatError, MatFormField, MatInput, MatLabel } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
-import { JsonPipe } from '@angular/common';
 import { loginSchema } from 'src/app/shared/validation/login-schema';
+import { MyCustomInput } from 'src/app/shared/components/my-custom-input/my-custom-input';
 
 @Component({
   selector: 'app-login',
-  imports: [MatFormField, MatLabel, MatInput, FormField, MatButton, MatError, JsonPipe],
+  imports: [MatFormField, MatLabel, MatInput, FormField, MatButton, MatError, MyCustomInput],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
@@ -24,6 +24,7 @@ export class LoginComponent {
   isAgeEditable = signal(false);
 
   loginModel = signal<LoginData>({
+    name: '',
     email: '',
     password: '',
     age: '',
@@ -34,7 +35,6 @@ export class LoginComponent {
     debounce(schemaPath.email, 1000);
     apply(schemaPath, loginSchema);
 
-    required(schemaPath.password, { message: 'Password is required' });
     minLength(schemaPath.password, 2, { message: 'Too short' });
     email(schemaPath.email, { message: 'Enter a valid email address' });
     disabled(schemaPath.age, () => !this.isAgeEditable());
@@ -52,6 +52,7 @@ export class LoginComponent {
 
   setEmailAndPassword(): void {
     this.loginModel.set({
+      name: '',
       email: 'test',
       password: '123456',
       age: '1',
@@ -65,5 +66,13 @@ export class LoginComponent {
 
   addAddress(): void {
     this.loginForm.address().value.update((v) => [...v, '']);
+  }
+
+  setName(): void {
+    this.loginModel.update((v) => ({ ...v, name: 'Taras' }));
+  }
+
+  disableName(): void {
+    this.loginForm.name().disabled();
   }
 }

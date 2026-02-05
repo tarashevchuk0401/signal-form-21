@@ -8,7 +8,16 @@
 
     <button type="button" matButton="outlined" (click)="toggleAge()">Toggle Age</button>
     <button type="button" matButton="outlined" (click)="addAddress()">Add address!</button>
+    <button type="button" matButton="outlined" (click)="setName()">Set Name</button>
+    <button type="button" matButton="outlined" (click)="disableName()">Disable Name</button>
   </div>
+
+  <div>name touched : {{ loginForm.name().touched() }}</div>
+  <mat-label>Name</mat-label>
+
+  <app-my-custom-input [formField]="loginForm.name"></app-my-custom-input>
+
+  <div>email touched : {{ loginForm.email().touched() }}</div>
 
   <mat-form-field appearance="outline">
     <mat-label>Email</mat-label>

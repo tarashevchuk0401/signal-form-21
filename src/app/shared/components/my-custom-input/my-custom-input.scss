@@ -1,0 +1,12 @@
+:host {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+
+  .my-custom-input {
+    border: 1px solid var(--mat-sys-on-background);
+    color: var(--mat-sys-primary);
+    background-color: var(--mat-color-primary-light);
+    font-size: 30px;
+  }
+}
