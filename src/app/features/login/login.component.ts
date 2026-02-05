@@ -7,7 +7,6 @@ import {
   form,
   FormField,
   minLength,
-  required,
 } from '@angular/forms/signals';
 import { MatError, MatFormField, MatInput, MatLabel } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
@@ -22,6 +21,7 @@ import { MyCustomInput } from 'src/app/shared/components/my-custom-input/my-cust
 })
 export class LoginComponent {
   isAgeEditable = signal(false);
+  isNameDisabled = signal(false);
 
   loginModel = signal<LoginData>({
     name: '',
@@ -39,6 +39,8 @@ export class LoginComponent {
     email(schemaPath.email, { message: 'Enter a valid email address' });
     disabled(schemaPath.age, () => !this.isAgeEditable());
     minLength(schemaPath.age, 2, { message: 'Too young!' });
+    disabled(schemaPath.email);
+    disabled(schemaPath.name, () => this.isNameDisabled());
   });
 
   submit(event: Event): void {
@@ -72,7 +74,7 @@ export class LoginComponent {
     this.loginModel.update((v) => ({ ...v, name: 'Taras' }));
   }
 
-  disableName(): void {
-    this.loginForm.name().disabled();
+  toggleName(): void {
+    this.isNameDisabled.update((v) => !v);
   }
 }

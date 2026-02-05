@@ -2,7 +2,11 @@
     class="my-custom-input"
     type="text"
     [value]="value()"
-    (input)="value.set($event.target.value)"
     placeholder="Enter text..."
+    (input)="value.set($event.target.value)"
+    (blur)="touched.set(true)"
+    [disabled]="disabled()"
+    [readonly]="readonly()"
+    [class.invalid]="invalid()"
+    [attr.aria-invalid]="invalid()"
 />
-<div>nt : {{touched()}}</div>
