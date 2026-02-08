@@ -6,7 +6,9 @@ import {
   email,
   form,
   FormField,
+  hidden,
   minLength,
+  submit,
 } from '@angular/forms/signals';
 import { MatError, MatFormField, MatInput, MatLabel } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
@@ -32,20 +34,28 @@ export class LoginComponent {
   });
 
   loginForm = form(this.loginModel, (schemaPath) => {
-    debounce(schemaPath.email, 1000);
     apply(schemaPath, loginSchema);
 
     minLength(schemaPath.password, 2, { message: 'Too short' });
     email(schemaPath.email, { message: 'Enter a valid email address' });
     disabled(schemaPath.age, () => !this.isAgeEditable());
     minLength(schemaPath.age, 2, { message: 'Too young!' });
-    disabled(schemaPath.email);
     disabled(schemaPath.name, () => this.isNameDisabled());
   });
 
-  submit(event: Event): void {
+  async submit(event: Event) {
     event.preventDefault();
-    console.log(this.loginModel());
+
+    await submit(this.loginForm, async (form) => {
+      // 1. At this point all fields are already marked as touched
+      // 2. If form is invalid - this function will NOT be called
+      // 3. form().submitting() === true during execution
+
+      const response = await setTimeout(() => console.log('Submit', this.loginForm()), 1500);
+      console.log(response);
+
+      return undefined; // success
+    });
   }
 
   setEmail() {
@@ -55,7 +65,7 @@ export class LoginComponent {
   setEmailAndPassword(): void {
     this.loginModel.set({
       name: '',
-      email: 'test',
+      email: 'test@dsdf',
       password: '123456',
       age: '1',
       address: [],
@@ -77,4 +87,5 @@ export class LoginComponent {
   toggleName(): void {
     this.isNameDisabled.update((v) => !v);
   }
+
 }
