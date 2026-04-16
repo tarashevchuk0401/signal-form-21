@@ -1,7 +1,7 @@
 form {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 3rem;
   align-items: center;
   padding: 2rem;
   border: 1px solid var(--mat-sys-on-background);
@@ -13,4 +13,10 @@ form {
     justify-content: center;
     flex-wrap: wrap;
   }
+
+    .address {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
 }

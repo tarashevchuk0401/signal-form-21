@@ -1,12 +1,28 @@
 :host {
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
   width: 100%;
 
   .my-custom-input {
-    border: 1px solid var(--mat-sys-on-background);
+    border: 1px solid var(--mat-sys-primary);
+    outline: 1px solid var(--mat-sys-primary);
     color: var(--mat-sys-primary);
     background-color: var(--mat-color-primary-light);
-    font-size: 30px;
+    font-size: 20px;
+    border-radius: 5px;
+    padding: 5px;
+    max-width: 200px;
+
+    &:disabled {
+      border: 1px solid gray;
+      outline: 1px solid gray;
+      color: gray;
+    }
   }
+
+    .hint{
+        font-size: 13px;
+    }
 }
