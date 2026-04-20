@@ -3,7 +3,7 @@ import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import { compatForm } from '@angular/forms/signals/compat';
-import { FormField, FormRoot, min, required } from '@angular/forms/signals';
+import { FormField, FormRoot, min, minLength, required } from '@angular/forms/signals';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 
 @Component({
@@ -45,13 +45,13 @@ export class Compatibility {
     (schemaPath) => {
       required(schemaPath.firstName, { message: 'First name is required' });
       required(schemaPath.lastName, { message: 'Last name is required' });
-      min(schemaPath.firstName, 3, { message: 'First name must be at least 3 characters' });
-      min(schemaPath.lastName, 3, { message: 'Last name must be at least 3 characters' });
+      minLength(schemaPath.firstName, 3, { message: 'First name must be at least 3 characters' });
+      minLength(schemaPath.lastName, 3, { message: 'Last name must be at least 3 characters' });
     },
     {
       submission: {
         action: async () => {
-          console.log('Submit', this.signalNameForm().valid());
+          console.log('is valid', this.signalNameForm().valid());
         },
       },
     },
