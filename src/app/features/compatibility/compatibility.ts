@@ -3,7 +3,7 @@ import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import { compatForm } from '@angular/forms/signals/compat';
-import { FormField, FormRoot } from '@angular/forms/signals';
+import { FormField, FormRoot, min, required } from '@angular/forms/signals';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 
 @Component({
@@ -26,15 +26,8 @@ export class Compatibility {
   public readonly isSignalForm = signal<boolean>(false);
 
   nameForm = this.fb.group({
-// Use the object syntax for the second argument to include nonNullable
-    firstName: this.fb.control('', {
-      validators: [Validators.required, Validators.minLength(3)],
-      nonNullable: true
-    }),
-    lastName: ['', {
-      validators: [Validators.required, Validators.minLength(3)],
-      nonNullable: true
-    }],
+    firstName: ['', [Validators.required, Validators.minLength(3)]],
+    lastName: ['', [Validators.required, Validators.minLength(3)]],
   });
 
   onSubmit() {
@@ -43,17 +36,26 @@ export class Compatibility {
 
   // <-- Signal Form -->
   compatForm = signal({
-    firstName: this.nameForm.controls.firstName ?? '',
-    lastName: this.nameForm.controls.lastName ?? '',
+    firstName: this.nameForm.controls.firstName.value ?? '',
+    lastName: this.nameForm.controls.lastName.value ?? '',
   });
 
-  signalNameForm = compatForm(this.compatForm, {
-    submission: {
-      action: async () => {
-        console.log('Submit', this.signalNameForm().valid());
+  signalNameForm = compatForm(
+    this.compatForm,
+    (schemaPath) => {
+      required(schemaPath.firstName, { message: 'First name is required' });
+      required(schemaPath.lastName, { message: 'Last name is required' });
+      min(schemaPath.firstName, 3, { message: 'First name must be at least 3 characters' });
+      min(schemaPath.lastName, 3, { message: 'Last name must be at least 3 characters' });
+    },
+    {
+      submission: {
+        action: async () => {
+          console.log('Submit', this.signalNameForm().valid());
+        },
       },
     },
-  });
+  );
 
   public toggleSignalForm(): void {
     this.nameForm.reset();

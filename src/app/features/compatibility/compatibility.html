@@ -4,27 +4,27 @@
   </mat-slide-toggle>
 </div>
 
-<!--@if (isSignalForm()) {-->
+@if (isSignalForm()) {
   <form [formRoot]="signalNameForm">
     <p>Signal</p>
 
     <div>
       <mat-form-field appearance="outline">
         <mat-label>First Name</mat-label>
-        <input [formField]="signalNameForm.firstName " matInput placeholder="Name" />
+        <input [formField]="signalNameForm.firstName" matInput placeholder="Name" />
       </mat-form-field>
     </div>
 
     <div>
       <mat-form-field appearance="outline">
         <mat-label>Last Name</mat-label>
-        <input [formField]="signalNameForm.lastName " matInput placeholder="Surname" />
+        <input [formField]="signalNameForm.lastName" matInput placeholder="Surname" />
       </mat-form-field>
     </div>
 
-    <button type="submit" matButton="filled" [disabled]="!signalNameForm().valid">Submit</button>
+    <button type="submit" matButton="filled" [disabled]="!signalNameForm().valid()">Submit</button>
   </form>
-<!--} @else {-->
+} @else {
   <form [formGroup]="nameForm" (ngSubmit)="onSubmit()">
     <p>Reactive</p>
 
@@ -44,4 +44,4 @@
 
     <button type="submit" matButton="filled" [disabled]="!nameForm.valid">Submit</button>
   </form>
-<!--}-->
+}
