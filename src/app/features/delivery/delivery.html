@@ -1,0 +1,46 @@
+<form [formRoot]="deliveryForm">
+  <div class="form-group">
+    <p>Account</p>
+    <div class="form-control">
+      <mat-form-field appearance="outline">
+        <mat-label>User Name</mat-label>
+        <input [formField]="deliveryForm.account.username" matInput placeholder="Name" />
+      </mat-form-field>
+      <app-form-error [fieldRef]="deliveryForm.account.username" />
+    </div>
+
+    <div class="form-control">
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input [formField]="deliveryForm.account.email" matInput placeholder="Email" />
+      </mat-form-field>
+      <app-form-error [fieldRef]="deliveryForm.account.email" />
+    </div>
+
+    <div class="form-control">
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input [formField]="deliveryForm.account.password" matInput placeholder="Password" />
+      </mat-form-field>
+        <div>ERROR {{deliveryForm.account.password().errors().length}}</div>
+        
+        <app-form-error [fieldRef]="deliveryForm.account.password" />
+    </div>
+
+    <div class="form-control">
+      <mat-form-field appearance="outline">
+        <mat-label>Confirm Password</mat-label>
+        <input
+          [formField]="deliveryForm.account.confirmPassword"
+          matInput
+          placeholder="Confirm Pasword"
+        />
+      </mat-form-field>
+        <div>ERROR {{deliveryForm.account.confirmPassword().errors().length}}</div>
+      <app-form-error [fieldRef]="deliveryForm.account.confirmPassword" />
+<!--      <div>CP: {{ deliveryForm.account.password | json }}</div>-->
+    </div>
+  </div>
+
+  <button type="submit" matButton="filled" [disabled]="!deliveryForm().valid()">Submit</button>
+</form>
