@@ -66,7 +66,8 @@ export class SignUpComponent {
       email(schemaPath.email, { message: 'Enter a valid email address' });
       disabled(schemaPath.age, () => !this.isAgeEditable());
       disabled(schemaPath.name, () => this.isNameDisabled());
-      // apply(schemaPath, signUpSchema);
+
+      apply(schemaPath, signUpSchema);
     },
     {
       submission: {
@@ -98,25 +99,6 @@ export class SignUpComponent {
 
   toggleAge(): void {
     this.isAgeEditable.update((v) => !v);
-  }
-
-  async submit(event: Event) {
-    event.preventDefault();
-
-    await submit(this.signUpForm, async () => {
-      // 1. At this point all fields are already marked as touched
-      // 2. If form is invalid - this function will NOT be called
-      // 3. form().submitting() === true during execution
-
-      await setTimeout(() => {
-        console.log('Submit', this.signUpForm());
-        this.openSnackBar('Form submitted successfully!', 'Close');
-      });
-
-      this.resetForm();
-
-      return undefined;
-    });
   }
 
   private _snackBar = inject(MatSnackBar);
