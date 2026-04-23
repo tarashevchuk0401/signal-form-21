@@ -21,103 +21,24 @@ import { RegistrationService } from 'src/app/shared/services/registration.servic
 import { JsonPipe } from '@angular/common';
 import { MatRadioButton, MatRadioGroup } from '@angular/material/radio';
 import { MatOption, MatSelect } from '@angular/material/select';
+import {
+  AccountForm,
+  AccountFormSchema,
+} from 'src/app/features/delivery/account-form/account-form';
+import { AccountFormInterface } from 'src/app/shared/interfaces/forms/account-from.interface';
+import { DeliveryDetailsFormInterface } from 'src/app/shared/interfaces/forms/delivery-details-form.interface';
+import { DeliveryDetailFormSchema, DeliveryDetailsForm } from 'src/app/features/delivery/delivery-details-form/delivery-details-form';
 
 export interface DeliveryForm {
-  account: AccountForm;
-  deliveryDetails: DeliveryDetailsForm;
-}
-
-export interface AccountForm {
-  username: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
+  account: AccountFormInterface;
+  deliveryDetails: DeliveryDetailsFormInterface;
 }
 
 export type DeliveryType = 'home' | 'pickup';
 export type DeliveryDay = 'Mon-Fri' | 'Sat-Sun';
 
-export interface DeliveryDetailsForm {
-  deliveryType: DeliveryType;
-  address: {
-    street: string;
-    city: string;
-    zip: string;
-  };
-  deliveryDay: DeliveryDay;
-  timeSlot: string;
-}
 
-export const AccountFormSchema = schema<AccountForm>((schema) => {
-  required(schema.username, { message: 'User name is required' });
-  validateAsync(schema.username, {
-    params: (ctx) => ctx.value(),
 
-    factory: (params) => {
-      const registrationService = inject(RegistrationService);
-      return resource({
-        params,
-        loader: async ({ params }) => {
-          return await registrationService.checkUserExists(params as string);
-        },
-      });
-    },
-
-    onSuccess: (result) => {
-      return result
-        ? {
-            kind: 'userExists',
-            message: 'Try another name (taras).',
-          }
-        : undefined;
-    },
-    onError: () => undefined,
-  });
-
-  required(schema.email, { message: 'Email name is required' });
-
-  required(schema.password, { message: 'Password name is required' });
-  minLength(schema.password, 3, { message: 'Password must be at least 3 characters long' });
-
-  required(schema.confirmPassword, { message: 'Password confirmation is required' });
-
-  // ERROR. Should display error if password and confirmPassword fields are not equal
-  validateTree(schema, (ctx) => {
-    return ctx.value().password === ctx.value().confirmPassword
-      ? undefined
-      : {
-          field: ctx.fieldTree.confirmPassword,
-          kind: 'confirmationPassword',
-          message: 'The entered password must match with the one specified in "Password" field.',
-        };
-  });
-});
-
-export const DeliveryDetailFormSchema = schema<DeliveryDetailsForm>((schema) => {
-  required(schema.deliveryType, { message: 'Delivery type is required' });
-
-  hidden(schema.address, (ctx) => ctx.valueOf(schema.deliveryType) === 'pickup');
-  required(schema.address.city, { message: 'City is required' });
-  required(schema.address.zip, { message: 'Zip is required' });
-  minLength(schema.address.zip, 3, { message: 'Zip too short' });
-  required(schema.address.street, { message: 'Street is required' });
-
-  required(schema.timeSlot, { message: 'Time slot is required' });
-  applyWhen(
-    schema,
-    (ctx) => ctx.value().deliveryDay === 'Sat-Sun',
-    (pathWhenTrue) => {
-      validate(pathWhenTrue.timeSlot, (ctx) =>
-        ctx.value() !== '10'
-          ? {
-            kind: 'noTopicSelected',
-            message: 'Select another slot. Only 10:00 is available in weekend. ',
-          }
-          : undefined
-      );
-    }
-  );
-});
 
 @Component({
   selector: 'app-delivery',
@@ -129,11 +50,12 @@ export const DeliveryDetailFormSchema = schema<DeliveryDetailsForm>((schema) => 
     FormField,
     MatButton,
     FormError,
-    JsonPipe,
     MatRadioGroup,
     MatRadioButton,
     MatSelect,
     MatOption,
+    AccountForm,
+    DeliveryDetailsForm,
   ],
   templateUrl: './delivery.html',
   styleUrl: './delivery.scss',
