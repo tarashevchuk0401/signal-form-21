@@ -12,10 +12,16 @@ import {
   DeliveryDetailFormSchema,
   DeliveryDetailsForm,
 } from 'src/app/features/delivery/delivery-details-form/delivery-details-form';
+import {
+  ProductForm,
+  ProductFormSchema,
+} from 'src/app/features/delivery/product-form/product-form';
+import { ProductFormInterface } from 'src/app/shared/interfaces/forms/product-form.interface';
 
 export interface DeliveryForm {
   account: AccountFormInterface;
   deliveryDetails: DeliveryDetailsFormInterface;
+  products: ProductFormInterface[];
 }
 
 export type DeliveryType = 'home' | 'pickup';
@@ -23,7 +29,7 @@ export type DeliveryDay = 'Mon-Fri' | 'Sat-Sun';
 
 @Component({
   selector: 'app-delivery',
-  imports: [FormRoot, MatButton, AccountForm, DeliveryDetailsForm],
+  imports: [FormRoot, MatButton, AccountForm, DeliveryDetailsForm, ProductForm],
   templateUrl: './delivery.html',
   styleUrl: './delivery.scss',
 })
@@ -45,6 +51,12 @@ export class Delivery {
       deliveryDay: 'Mon-Fri',
       timeSlot: '',
     },
+    products: [
+      {
+        name: null,
+        quantity: null,
+      },
+    ],
   });
 
   deliveryForm = form(
@@ -52,6 +64,7 @@ export class Delivery {
     (schemaPath) => {
       apply(schemaPath.account, AccountFormSchema);
       apply(schemaPath.deliveryDetails, DeliveryDetailFormSchema);
+      apply(schemaPath.products, ProductFormSchema);
     },
     {
       submission: {
@@ -73,6 +86,26 @@ export class Delivery {
         password: '123456',
         confirmPassword: '123456',
       },
+    }));
+  }
+
+  removeProduct(index: number): void {
+    this.deliveryFormModel.update((v) => ({
+      ...v,
+      products: v.products.filter((_, i) => i !== index),
+    }));
+  }
+
+  addProduct(): void {
+    this.deliveryFormModel.update((v) => ({
+      ...v,
+      products: [
+        ...v.products,
+        {
+          name: null,
+          quantity: null,
+        },
+      ],
     }));
   }
 

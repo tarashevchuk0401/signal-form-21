@@ -1,0 +1,13 @@
+@use '../../../../styles/form.style.scss' as *;
+
+:host {
+    @include form-group;
+
+    .products{
+        .product{
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+    }
+}
