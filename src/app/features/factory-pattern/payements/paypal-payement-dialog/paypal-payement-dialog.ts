@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
-import { MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
+import { PaymentDialogData } from 'src/app/features/factory-pattern/payements/payment-factory';
 
 @Component({
   selector: 'app-paypal-payement-dialog',
@@ -9,4 +10,5 @@ import { MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
 })
 export class PaypalPayementDialog {
   readonly dialogRef = inject(MatDialogRef<PaypalPayementDialog>);
+  readonly data = inject<PaymentDialogData>(MAT_DIALOG_DATA);
 }

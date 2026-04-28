@@ -12,6 +12,7 @@ import { MatButton } from '@angular/material/button';
 import { Dialog } from '@angular/cdk/dialog';
 import { paymentFactory } from 'src/app/features/factory-pattern/payements/payment-factory';
 import { MatDialog } from '@angular/material/dialog';
+import { DialogBuilderService } from 'src/app/shared/services/dialog-builder.service';
 
 export type PaymentMethod = 'paypal' | 'stripe';
 export interface PaymentFormInterface {
@@ -51,6 +52,12 @@ export class FactoryPattern implements OnInit {
     const method = this.paymentForm.method().value()!;
     const paymentDialog = paymentFactory(method);
 
-    this.dialog.open(paymentDialog, { width: '500px' });
+    const dialogConfig = new DialogBuilderService()
+      .setWidth('800px')
+      .setPosition({ top: '100px' , left: '100px'})
+      .setPaymentMethod(method)
+      .build();
+
+    this.dialog.open(paymentDialog, dialogConfig);
   }
 }
