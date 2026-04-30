@@ -1,5 +1,12 @@
 import { InjectionToken } from '@angular/core';
 
+export interface PaymentGatewayInterface {
+  pay(): void;
+  fetchPaymentDetails(): void;
+  refund(): void;
+  fetchRefundDetails(): void;
+}
+
 export interface PaymentServiceInterface {
   pay(): void;
   fetchPaymentDetails(): void;

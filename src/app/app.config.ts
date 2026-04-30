@@ -9,7 +9,6 @@ import {
 import {
   PAYMENT_GATEWAY,
   PayPalPaymentFactory,
-  StripePaymentFactory,
 } from 'src/app/features/abstract-factory-pattern/abstract-factory.services';
 
 export const appConfig: ApplicationConfig = {
@@ -22,7 +21,7 @@ export const appConfig: ApplicationConfig = {
     },
     {
       provide: PAYMENT_GATEWAY,
-      useClass:PayPalPaymentFactory,
-    }
+      useClass: PayPalPaymentFactory,
+    },
   ],
 };
