@@ -1,0 +1,16 @@
+.action{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin:1rem
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    align-items: center;
+    padding: 2rem;
+    border: 1px solid var(--mat-sys-on-background);
+    border-radius: 1rem;
+}

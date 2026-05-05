@@ -1,18 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RebaseTest } from './rebase-test';
+import { FormError } from './form-error';
 
-describe('RebaseTest', () => {
-  let component: RebaseTest;
-  let fixture: ComponentFixture<RebaseTest>;
+describe('FormError', () => {
+  let component: FormError;
+  let fixture: ComponentFixture<FormError>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RebaseTest]
-    })
-    .compileComponents();
+      imports: [FormError],
+    }).compileComponents();
 
-    fixture = TestBed.createComponent(RebaseTest);
+    fixture = TestBed.createComponent(FormError);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

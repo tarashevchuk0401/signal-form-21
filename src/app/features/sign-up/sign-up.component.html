@@ -1,0 +1,66 @@
+<form [formRoot]="signUpForm">
+  <div class="actions">
+    <button type="button" matButton="outlined" (click)="setEmailAndPassword()">
+      Set Email & Password
+    </button>
+
+    <button type="button" matButton="outlined" (click)="addAddress()">Add address</button>
+
+    <mat-slide-toggle [checked]="isNameDisabled()" (change)="toggleName()">
+      Toggle Name
+    </mat-slide-toggle>
+
+    <mat-slide-toggle [checked]="isAgeEditable()" (change)="toggleAge()">
+      Toggle Age
+    </mat-slide-toggle>
+  </div>
+
+  <div>
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input [formField]="signUpForm.email" matInput placeholder="Email" />
+    </mat-form-field>
+    @if (signUpForm.email().touched() && signUpForm.email().invalid()) {
+      @for (error of signUpForm.email().errors(); track error) {
+        <mat-error>{{ error.message }}</mat-error>
+      }
+    }
+  </div>
+
+  <div>
+    <mat-form-field appearance="outline">
+      <mat-label>Password</mat-label>
+      <input [formField]="signUpForm.password" matInput placeholder="Password" />
+    </mat-form-field>
+    @if (signUpForm.password().touched() && signUpForm.password().invalid()) {
+      @for (error of signUpForm.password().errors(); track error) {
+        <mat-error>{{ error.message }}</mat-error>
+      }
+    }
+  </div>
+
+  <div>
+    <mat-form-field appearance="outline">
+      <mat-label>Age</mat-label>
+      <input [formField]="signUpForm.age" type="number" matInput placeholder="Age" />
+    </mat-form-field>
+    @if (signUpForm?.age()?.touched() && signUpForm?.age()?.invalid()) {
+      @for (error of signUpForm?.age()?.errors(); track error) {
+        <mat-error>{{ error.message }}</mat-error>
+      }
+    }
+  </div>
+
+  <div class="address">
+    @for (address of signUpForm.address; track $index) {
+      <mat-form-field appearance="outline">
+        <mat-label>Address {{ $index + 1 }}</mat-label>
+        <input [formField]="address" type="string" matInput placeholder="Address" />
+      </mat-form-field>
+    }
+  </div>
+
+<!--  <app-my-custom-input [formField]="signUpForm.name"></app-my-custom-input>-->
+
+  <button type="submit" matButton="filled" [disabled]="!signUpForm().valid()">Submit</button>
+</form>

@@ -1,0 +1,17 @@
+<form [formRoot]="deliveryForm">
+  <button (click)="setAccountForm()" matButton>Set Account Form</button>
+
+  <app-account-form [accountForm]="deliveryForm.account"></app-account-form>
+
+  <app-delivery-details-form
+    [deliveryDetailsForm]="deliveryForm.deliveryDetails"
+  ></app-delivery-details-form>
+
+  <app-product-form
+    [productForm]="deliveryForm.products"
+    (removeProduct)="removeProduct($event)"
+    (addProduct)="addProduct()"
+  ></app-product-form>
+
+  <button type="submit" matButton="filled" [disabled]="!deliveryForm().valid()">Submit</button>
+</form>

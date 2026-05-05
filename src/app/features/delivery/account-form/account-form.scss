@@ -1,0 +1,5 @@
+@use '../../../../styles/form.style.scss' as *;
+
+:host {
+    @include form-group;
+}

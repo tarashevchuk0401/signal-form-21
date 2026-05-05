@@ -1,0 +1,14 @@
+<form [formRoot]="paymentForm">
+  <div class="form-control">
+    <mat-form-field>
+      <mat-label>Method</mat-label>
+      <mat-select [formField]="paymentForm.method" [multiple]="false">
+        <mat-option [value]="'paypal'">paypal </mat-option>
+        <mat-option [value]="'stripe'">stripe</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <app-form-error [fieldRef]="paymentForm.method" />
+  </div>
+</form>
+
+<button (click)="onOpenPaymentDialog()" matButton>PAY</button>

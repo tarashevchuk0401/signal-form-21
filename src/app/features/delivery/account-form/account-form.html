@@ -1,0 +1,37 @@
+<p>Account</p>
+<div class="form-control">
+    <mat-form-field appearance="outline">
+        <mat-label>User Name</mat-label>
+        <input [formField]="accountForm().username" matInput placeholder="Name" />
+    </mat-form-field>
+    <app-form-error [fieldRef]="accountForm().username" />
+</div>
+
+<div class="form-control">
+    <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input [formField]="accountForm().email" matInput placeholder="Email" />
+    </mat-form-field>
+    <app-form-error [fieldRef]="accountForm().email" />
+</div>
+
+<div class="form-control">
+    <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input [formField]="accountForm().password" matInput placeholder="Password" />
+    </mat-form-field>
+    
+    <app-form-error [fieldRef]="accountForm().password" />
+</div>
+
+<div class="form-control">
+    <mat-form-field appearance="outline">
+        <mat-label>Confirm Password</mat-label>
+        <input
+            [formField]="accountForm().confirmPassword"
+            matInput
+            placeholder="Confirm Pasword"
+        />
+    </mat-form-field>
+    <app-form-error [fieldRef]="accountForm().confirmPassword" />
+</div>
