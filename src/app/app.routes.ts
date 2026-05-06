@@ -5,6 +5,7 @@ import { Delivery } from 'src/app/features/delivery/delivery';
 import { FactoryPattern } from 'src/app/features/factory-pattern/factory-pattern';
 import { AbstractFactoryPattern } from 'src/app/features/abstract-factory-pattern/abstract-factory-pattern';
 import { Bridge } from 'src/app/features/bridge/bridge';
+import { Command } from 'src/app/features/command/command';
 import { ChainOfResponsibility } from 'src/app/features/chain-of-responsibility/chain-of-responsibility';
 
 export const routes: Routes = [
@@ -15,5 +16,6 @@ export const routes: Routes = [
   { path: 'factory', component: FactoryPattern },
   { path: 'abstract-factory', component: AbstractFactoryPattern },
   { path: 'bridge', component: Bridge },
+  { path: 'command', component: Command },
   { path: 'cor', component: ChainOfResponsibility },
 ];
