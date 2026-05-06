@@ -1,4 +1,9 @@
 <p>command works!</p>
+<mat-form-field appearance="outline">
+    <mat-label>Email</mat-label>
+    <input [formControl]="dynamicValue" matInput  />
+</mat-form-field>
+
 <div>Result = {{ calculator.currentValue }}</div>
 <div class="actions">
   <button (click)="undo()" matButton="filled">Undo</button>

@@ -1,55 +1,49 @@
 import { Injectable } from '@angular/core';
-import { OperationsList } from 'src/app/features/command/operationsList';
 
 export interface CommandInterface {
-  execute(value: number, current: number): number;
-  undo(value: number, current: number): number;
-}
-
-export interface HistoryItem {
-  operation: string;
-  value: number;
+  execute(current: number): number;
+  undo(current: number): number;
 }
 
 @Injectable({ providedIn: 'root' })
 export class Calculator {
   currentValue = 0;
-  history: HistoryItem[] = [];
-  operations = OperationsList;
+  history: CommandInterface[] = [];
 
-  executeCommand(command: CommandInterface, value: number): number {
-    const operation = command instanceof AddService ? '+' : '-';
-    this.history.push({
-      operation,
-      value,
-    });
-    return (this.currentValue = command.execute(value, this.currentValue));
+  executeCommand(command: CommandInterface): number {
+    this.history.push(command);
+    this.currentValue = command.execute(this.currentValue);
+    return this.currentValue;
   }
 
   undoCommand() {
-    const lastCommand = this.history.pop();
-    if (!lastCommand) return;
+    const last = this.history.pop();
+    if (!last) return;
 
-    this.currentValue = this.operations[lastCommand.operation].undo(lastCommand.value, this.currentValue);
+    this.currentValue = last.undo(this.currentValue);
   }
 }
 
 export class AddService implements CommandInterface {
-  execute(value: number, current: number): number {
-    return (current += value);
+  constructor(private value: number) {}
+
+  execute(current: number): number {
+    return current + this.value;
   }
 
-  undo(value: number, current: number): number {
-    return (current -= value);
+  undo(current: number): number {
+    return current - this.value;
   }
 }
 
 export class SubtractService implements CommandInterface {
-  execute(value: number, current: number): number {
-    return (current -= value);
+  constructor(private value: number) {}
+
+  execute(current: number): number {
+    return current - this.value;
   }
 
-  undo(value: number, current: number): number {
-    return (current += value);
+  undo(current: number): number {
+    return current + this.value;
   }
 }

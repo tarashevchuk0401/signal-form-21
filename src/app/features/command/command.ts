@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   AddService,
   Calculator,
@@ -8,19 +8,28 @@ import {
 import { MatButton } from '@angular/material/button';
 import { JsonPipe } from '@angular/common';
 import { OperationsList } from 'src/app/features/command/operationsList';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
 
 @Component({
   selector: 'app-command',
-  imports: [MatButton, JsonPipe],
+  imports: [MatButton, JsonPipe, MatFormField, MatInput, MatLabel, ReactiveFormsModule],
   templateUrl: './command.html',
   styleUrl: './command.scss',
 })
 export class Command {
   calculator = inject(Calculator);
-  operationsList = OperationsList;
+  dynamicValue = new FormControl<number>(0);
 
   calculate(command: string) {
-    this.calculator.executeCommand(this.operationsList[command], 10);
+    const operations: Record<string, (value: number) => CommandInterface> = {
+      '+': (value) => new AddService(+value),
+      '-': (value) => new SubtractService(+value),
+    };
+    const value = this.dynamicValue.value ?? 0;
+    const cmd = operations[command](value);
+
+    this.calculator.executeCommand(cmd);
   }
 
   undo(): void {
