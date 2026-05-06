@@ -7,6 +7,7 @@ import {
 } from 'src/app/features/command/command.services';
 import { MatButton } from '@angular/material/button';
 import { JsonPipe } from '@angular/common';
+import { OperationsList } from 'src/app/features/command/operationsList';
 
 @Component({
   selector: 'app-command',
@@ -16,15 +17,13 @@ import { JsonPipe } from '@angular/common';
 })
 export class Command {
   calculator = inject(Calculator);
+  operationsList = OperationsList;
 
   calculate(command: string) {
-    const operations: Record<string, CommandInterface> = {
-      '+': new AddService(),
-      '-': new SubtractService(),
-    };
+    this.calculator.executeCommand(this.operationsList[command], 10);
+  }
 
-    this.calculator.executeCommand(operations[command], 10);
-
-    console.log(this.calculator.currentValue);
+  undo(): void {
+    this.calculator.undoCommand();
   }
 }

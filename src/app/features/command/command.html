@@ -1,9 +1,12 @@
 <p>command works!</p>
-<div>Result = {{calculator.currentValue}}</div>
-<button (click)="calculate('+')" mat-button>+</button>
-<button (click)="calculate('-')" mat-button>-</button>
+<div>Result = {{ calculator.currentValue }}</div>
+<div class="actions">
+  <button (click)="undo()" matButton="filled">Undo</button>
+  <button (click)="calculate('+')" matButton="filled">+</button>
+  <button (click)="calculate('-')" matButton="filled">-</button>
+</div>
 
 <div>History</div>
-@for(item of calculator.history;track $index){
-    <div>{{item | json}}</div>
+@for (item of calculator.history; track $index) {
+  <div>{{ item | json }}</div>
 }

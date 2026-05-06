@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { OperationsList } from 'src/app/features/command/operationsList';
 
 export interface CommandInterface {
   execute(value: number, current: number): number;
@@ -14,6 +15,7 @@ export interface HistoryItem {
 export class Calculator {
   currentValue = 0;
   history: HistoryItem[] = [];
+  operations = OperationsList;
 
   executeCommand(command: CommandInterface, value: number): number {
     const operation = command instanceof AddService ? '+' : '-';
@@ -25,8 +27,10 @@ export class Calculator {
   }
 
   undoCommand() {
-    const lastCommand = this.history[this.history.length - 1];
+    const lastCommand = this.history.pop();
+    if (!lastCommand) return;
 
+    this.currentValue = this.operations[lastCommand.operation].undo(lastCommand.value, this.currentValue);
   }
 }
 
