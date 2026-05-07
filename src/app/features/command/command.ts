@@ -7,7 +7,6 @@ import {
 } from 'src/app/features/command/command.services';
 import { MatButton } from '@angular/material/button';
 import { JsonPipe } from '@angular/common';
-import { OperationsList } from 'src/app/features/command/operationsList';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
 
