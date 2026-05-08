@@ -8,6 +8,7 @@ import { Bridge } from 'src/app/features/bridge/bridge';
 import { Command } from 'src/app/features/command/command';
 import { ChainOfResponsibility } from 'src/app/features/chain-of-responsibility/chain-of-responsibility';
 import { Memento } from 'src/app/features/memento/memento';
+import { State } from 'src/app/features/state/state';
 
 export const routes: Routes = [
   { path: '', component: SignUpComponent },
@@ -20,4 +21,5 @@ export const routes: Routes = [
   { path: 'command', component: Command },
   { path: 'cor', component: ChainOfResponsibility },
   { path: 'memento', component: Memento },
+  { path: 'state', component: State },
 ];

@@ -1,0 +1,11 @@
+<div class="order">
+    <div class="name">Book</div>
+    <div>Status: {{orderStateService.orderStatus()}}</div>
+    
+    <div class="action">
+        <button (click)="pay()" matButton="filled" [disabled]="!orderStateService.orderState.canPay" >Pay</button>
+        <button (click)="ship()" matButton="filled" [disabled]="!orderStateService.orderState.canShip" >Ship</button>
+        <button (click)="deliver()" matButton="filled" [disabled]="!orderStateService.orderState.canDeliver" >Deliver</button>
+        <button (click)="cancel()" matButton="filled" [disabled]="!orderStateService.orderState.canCancel" >Cancel</button>
+    </div>
+</div>
